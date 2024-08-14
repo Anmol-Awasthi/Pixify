@@ -46,11 +46,17 @@ export default function SignUp() {
             },
           },
         });
-
+  
         if (error) throw error;
-
-        // console.log("Session:", data.session);
-        // Handle successful sign up
+  
+        // Inform the user to check their email
+        Alert.alert(
+          "Check Your Email",
+          "A verification email has been sent. Please check your inbox to verify your email address."
+        );
+  
+        // Optionally, you can redirect to a different page or reset the form
+        router.replace("/SignIn"); // Or any other page you'd like to navigate to
       } catch (error) {
         console.log("Error:", error);
         Alert.alert("Sign Up", error.message);
@@ -59,21 +65,25 @@ export default function SignUp() {
       }
     }
   };
+  
 
   return (
     <>
       <StatusBar style="light" />
       <View className="flex-1 px-8 bg-[#17153B]">
-        <View className="bg-[#83c4f5de] h-12 w-12 flex items-center justify-center rounded-full absolute top-14 left-8">
-          <Pressable onPress={() => router.back()}>
-            <Ionicons name="chevron-back" size={36} color="white" />
-          </Pressable>
-        </View>
+      <View className="border-2 border-white h-10 w-10 flex items-center justify-center rounded-full absolute top-14 left-8">
+            <Pressable
+              onPress={() => router.back()}
+              className="flex items-center justify-center"
+            >
+              <Ionicons name="chevron-back" size={28} color="white" />
+            </Pressable>
+          </View>
         <Animated.View
           entering={FadeInUp.delay(50).duration(1000).springify().damping(7)}
-          className="mt-[35%] flex"
+          className="mt-[50%] flex"
         >
-          <Text className="text-5xl mb-4 text-[#83c3f5] font-semibold">
+          <Text className="text-4xl mb-4 text-[#83c3f5] font-semibold">
             Join Now !
           </Text>
           <Text className="text-xl text-white">Become a Pixify-er</Text>
@@ -87,13 +97,13 @@ export default function SignUp() {
               .damping(10)}
             className="flex border-b-2 rounded-md py-2 border-white flex-row items-center gap-4"
           >
-            <UserCircleIcon size={24} color="white" />
+            <UserCircleIcon size={24} color="gray" />
             <TextInput
               className="flex-1 tracking-wider text-xl text-white"
               placeholder="Username"
               keyboardType="default"
               required={true}
-              placeholderTextColor={"white"}
+              placeholderTextColor={"gray"}
               onChangeText={(value) => (userNameRef.current = value)}
             />
           </Animated.View>
@@ -104,13 +114,13 @@ export default function SignUp() {
               .damping(10)}
             className="flex border-b-2 rounded-md py-2 border-white flex-row items-center gap-4"
           >
-            <EnvelopeIcon size={24} color="white" />
+            <EnvelopeIcon size={24} color="gray" />
             <TextInput
               className="flex-1 tracking-wider text-xl text-white"
               placeholder="Email"
               keyboardType="email-address"
               required={true}
-              placeholderTextColor={"white"}
+              placeholderTextColor={"gray"}
               onChangeText={(value) => (emailRef.current = value)}
             />
           </Animated.View>
@@ -121,14 +131,14 @@ export default function SignUp() {
               .damping(10)}
             className="flex border-b-2 rounded-md py-2 border-white flex-row items-center gap-4"
           >
-            <LockClosedIcon size={24} color="white" />
+            <LockClosedIcon size={24} color="gray" />
             <TextInput
               className="text-xl flex-1 tracking-widest text-white"
               placeholder="Password"
               required={true}
               keyboardType="password"
               secureTextEntry={true}
-              placeholderTextColor={"white"}
+              placeholderTextColor={"gray"}
               onChangeText={(value) => (passwordRef.current = value)}
             />
           </Animated.View>
@@ -143,7 +153,7 @@ export default function SignUp() {
             </Text>
           ) : (
             <Pressable
-              className="bg-[#6EACDA] rounded-xl w-[50%] py-3 px-6 mt-10"
+              className="border-2 border-white rounded-xl w-[40%] py-2 px-6 mt-10"
               onPress={onSubmit}
             >
               <Text className="text-white text-2xl font-bold text-center">

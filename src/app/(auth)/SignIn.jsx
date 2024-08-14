@@ -57,16 +57,19 @@ export default function SignUp() {
       <StatusBar style="light" />
       <View className="flex-1 bg-[#17153B]">
         <View className="px-8 flex-1">
-          <View className="bg-[#83c4f5de] h-12 w-12 flex items-center justify-center rounded-full absolute top-14 left-8">
-          <Pressable onPress={() => router.back()}>
-            <Ionicons name="chevron-back" size={36} color="white" />
-          </Pressable>
+          <View className="border-2 border-white h-10 w-10 flex items-center justify-center rounded-full absolute top-14 left-8">
+            <Pressable
+              onPress={() => router.back()}
+              className="flex items-center justify-center"
+            >
+              <Ionicons name="chevron-back" size={28} color="white" />
+            </Pressable>
           </View>
           <Animated.View
             entering={FadeInUp.delay(50).duration(1000).springify().damping(7)}
-            className="mt-[40%] flex"
+            className="mt-[55%] flex"
           >
-            <Text className="text-5xl mb-4 text-[#83c3f5] font-semibold">
+            <Text className="text-4xl mb-4 text-[#83c3f5] font-semibold">
               Welcome back!
             </Text>
             <Text className="text-xl text-white">
@@ -82,13 +85,13 @@ export default function SignUp() {
                 .damping(10)}
               className="flex border-b-2 py-2 rounded-md border-white flex-row items-center gap-4"
             >
-              <EnvelopeIcon size={24} color="white" />
+              <EnvelopeIcon size={24} color="gray" />
               <TextInput
                 className="flex-1 tracking-wider text-xl text-white"
                 placeholder="Email"
                 keyboardType="email-address"
                 required={true}
-                placeholderTextColor={"white"}
+                placeholderTextColor={"gray"}
                 onChangeText={(value) => (emailRef.current = value)}
               />
             </Animated.View>
@@ -99,13 +102,13 @@ export default function SignUp() {
                 .damping(10)}
               className="flex border-b-2 rounded-md py-2 border-white flex-row items-center gap-4 mt-8"
             >
-              <LockClosedIcon size={24} color="white" />
+              <LockClosedIcon size={24} color="gray" />
               <TextInput
                 className="text-xl flex-1 tracking-wider text-white"
                 placeholder="Password"
                 required={true}
                 secureTextEntry={true}
-                placeholderTextColor={"white"}
+                placeholderTextColor={"gray"}
                 onChangeText={(value) => (passwordRef.current = value)}
               />
             </Animated.View>
@@ -123,10 +126,10 @@ export default function SignUp() {
               </Text>
             ) : (
               <Pressable
-                className="bg-[#6EACDA] rounded-xl w-[50%] py-3 px-6 mt-10"
+                className="border-2 border-white rounded-xl w-[40%] py-2 px-6 mt-10"
                 onPress={onSubmit}
               >
-                <Text className="text-white text-2xl font-bold text-center">
+                <Text className="text-white text-3xl font-bold text-center">
                   Sign In
                 </Text>
               </Pressable>
@@ -138,7 +141,7 @@ export default function SignUp() {
               .duration(1000)
               .springify()
               .damping(11)}
-            className="mt-20 flex flex-row items-center justify-center"
+            className="mt-16 flex flex-row items-center justify-center"
           >
             <Text className="text-white text-xl mr-2">
               Don't have an account?

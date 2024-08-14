@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
+import { LogBox, StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Stack, useRouter } from "expo-router";
 import { AuthProvider, useAuth } from "../contexts/AuthContext";
 import { supabase } from "./lib/Supabase";
-import Home from "./(main)/Home";
-import index from "./index";
 import { getUserData } from "../Services/userService";
+
+LogBox.ignoreLogs(['Warning: TNodeChildrenRenderer', 'Warning: MemoizedTNodeRenderer', 'Warning: TRenderEngineProvider']);
 
 const _layout = () => {
   return (
@@ -26,26 +26,32 @@ const MainLayout = () => {
         // console.log("Session user: ", session?.user);
 
         if (session) {
-          setAuth(session.user);
-          updateUserData(session?.user);
-          // console.log("Attempting to navigate to /Home...");
+          // console.log("Session user email: ", session.user.email);
+          setAuth(session?.user);
+          updateUserData(session?.user, session?.user?.email);
           router.replace("/Home");
-          // console.log("Redirection call made.");
         } else {
           setAuth(null);
-          router.replace("/");
+          setUserData({});
+          router.replace("/Welcome");
         }
       }
     );
   }, []);
 
-  const updateUserData = async (user) => {
-    let res = await getUserData(user.id);
-    if(res.success) {
-      setUserData(res.data);
+  const updateUserData = async (user, email) => {
+    if (user) {
+      let res = await getUserData(user.id);
+      if (res.success) {
+        setUserData({ ...res.data, email: email || '' });
+      }
+    } else {
+      // Handle the case where user is null
+      setUserData({});
     }
-  }
-
+  };
+  
+  
   return (
     <Stack
       screenOptions={{
@@ -54,7 +60,5 @@ const MainLayout = () => {
     />
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default _layout;
