@@ -4,11 +4,11 @@
     "slug": "Pixify",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/Pixify-logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/Pixify-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#17153B"
     },

@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   Image,
   Alert,
@@ -23,12 +22,8 @@ import {
 import Animated, { FadeInDown } from "react-native-reanimated";
 import * as ImagePicker from "expo-image-picker";
 import { getSupabaseFileUrl } from "../../Services/imageService";
-import {Video} from 'expo-av';
+import { Video } from "expo-av";
 import { CreateOrUpdatePost } from "../../Services/PostService";
-
-
-
-
 
 export default function Post() {
   const { user } = useAuth();
@@ -53,13 +48,12 @@ export default function Post() {
     setLoading(true);
     let res = await CreateOrUpdatePost(data);
     setLoading(false);
-    if(res.success) {
+    if (res.success) {
       setFile(null);
       bodyRef.current = "";
-      editorRef.current?.setContentHTML('');
+      editorRef.current?.setContentHTML("");
       router.back();
-    }
-    else {
+    } else {
       Alert.alert("Post upload", res.msg);
     }
   };
@@ -102,7 +96,6 @@ export default function Post() {
         allowsEditing: true,
       };
     }
-    
 
     let result = await ImagePicker.launchImageLibraryAsync(mediaConfig);
 
@@ -166,11 +159,11 @@ export default function Post() {
           <View className="h-60 w-full overflow-hidden rounded-3xl mt-6">
             {getFileType(file) == "video" ? (
               <Video
-              className="flex-1 w-full h0full"
-              source={{ uri: getFileUrl(file) }}
-              useNativeControls
-              resizeMode="cover"
-              isLooping
+                className="flex-1 w-full h0full"
+                source={{ uri: getFileUrl(file) }}
+                useNativeControls
+                resizeMode="cover"
+                isLooping
               />
             ) : (
               <Image
@@ -179,37 +172,34 @@ export default function Post() {
                 resizeMode="cover"
               />
             )}
-              <Pressable
-                className="absolute bg-red-500 top-2 right-2 z-10 p-1 rounded-full"
-                onPress={() => setFile(null)}
-              >
-                <XMarkIcon size={20} color="white" />
-              </Pressable>
+            <Pressable
+              className="absolute bg-red-500 top-2 right-2 z-10 p-1 rounded-full"
+              onPress={() => setFile(null)}
+            >
+              <XMarkIcon size={20} color="white" />
+            </Pressable>
           </View>
         )}
       </ScrollView>
 
       {/* Post Button */}
 
-      {
-        loading ? (
-          <Text className="mx-auto absolute left-[50%] bottom-11 text-white text-xl">
-              <ActivityIndicator size="large" color="white" />
+      {loading ? (
+        <Text className="mx-auto absolute left-[50%] bottom-11 text-white text-xl">
+          <ActivityIndicator size="large" color="white" />
+        </Text>
+      ) : (
+        <View className="mb-10">
+          <Pressable
+            className="border-2 fixed bottom-0 left-0 right-0 border-white w-full mx-auto py-2 rounded-3xl"
+            onPress={onSubmit}
+          >
+            <Text className="text-center font-medium text-white text-3xl -tracking-wider">
+              Post
             </Text>
-        ) :
-        (
-          <View className="mb-10">
-        <Pressable
-          className="border-2 fixed bottom-0 left-0 right-0 border-white w-full mx-auto py-2 rounded-3xl"
-          onPress={onSubmit}
-        >
-          <Text className="text-center font-medium text-white text-3xl -tracking-wider">
-            Post
-          </Text>
-        </Pressable>
-      </View>
-        )
-      }
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 }

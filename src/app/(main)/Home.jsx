@@ -1,11 +1,15 @@
-import {  ActivityIndicator, FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { supabase } from "../lib/Supabase";
-import {
-  HeartIcon,
-  PlusCircleIcon,
-} from "react-native-heroicons/outline";
+import { HeartIcon, PlusCircleIcon } from "react-native-heroicons/outline";
 import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 import Avatar from "../../components/Avatar";
@@ -16,45 +20,51 @@ import { getUserData } from "../../Services/userService";
 export default function Home() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
-
-  var limit = 0;
+  const [hasMore, setHasMore] = useState(true);
+  const [limit, setLimit] = useState(4);
 
   const handlePostEvent = async (payload) => {
     console.log("Payload: ", payload);
-    if (payload.eventType === 'INSERT' && payload?.new?.id) {
-      let newPost = {...payload.new}
+    if (payload.eventType === "INSERT" && payload?.new?.id) {
+      let newPost = { ...payload.new };
       let res = await getUserData(newPost.userId);
-      newPost.user = res.success? res.data : {}
-      setPosts(prev => [newPost, ...prev]);
+      newPost.user = res.success ? res.data : {};
+      setPosts((prev) => [newPost, ...prev]);
     }
-  }
+  };
 
   useEffect(() => {
-
     let postChannel = supabase
-    .channel('posts')
-    .on('postgres_changes', {event: '*', schema: 'public', table: 'posts'}, handlePostEvent)
-    .subscribe();
+      .channel("posts")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "posts" },
+        handlePostEvent
+      )
+      .subscribe();
 
-    
-    getPosts();
+    // getPosts();
     return () => {
       supabase.removeChannel(postChannel);
-    }
+    };
   }, []);
 
   const getPosts = async () => {
-    limit = limit + 10;
+    if(!hasMore) return;
+    setLimit((prevLimit) => prevLimit + 4);
+    console.log("Fetching posts...", limit);
     let res = await fetchPosts(limit);
-    // console.log("Posts: ", res);
     // console.log("User from 1st post: ", res.data[0].user);
 
     if (res.success) {
+      // console.log("Posts length: ", posts.length);
+      // console.log("Result data length: ", res.data.length);
+      if(posts.length==res.data.length) {
+        setHasMore(false);
+      }
       setPosts(res.data);
     }
-
-  }
-
+  };
 
   // const onLogout = async () => {
   //   const { error } = await supabase.auth.signOut();
@@ -90,7 +100,7 @@ export default function Home() {
                 uri={user?.image}
                 size={40}
                 rounded={12}
-                style={{ borderWidth: 2}}
+                style={{ borderWidth: 2 }}
               />
             </Pressable>
           </View>
@@ -103,19 +113,25 @@ export default function Home() {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={{ paddingBottom: 100 }}
-          renderItem={({ item }) => 
-            <PostCard
-              item={item}
-              currentUser={user}
-              router={router}
-            />
-          }
-          ListFooterComponent={(
-            <View className={`${posts.length==0 ? "mt-40" : "mt-10"}`}>
-              <ActivityIndicator size="large" color="white" />
-            </View>
+          contentContainerStyle={{ paddingBottom: 100, paddingTop: 10 }}
+          renderItem={({ item }) => (
+            <PostCard item={item} currentUser={user} router={router} />
           )}
+          onEndReached={() => {
+            getPosts();
+            console.log("Reached end");
+          }}
+          onEndReachedThreshold={0}
+          ListFooterComponent={
+            <View className={`${posts.length == 0 ? "mt-40" : "mt-10"}`}>
+              {
+                hasMore ? (
+                  <ActivityIndicator size="large" color="white" />
+                ) :
+                <View className="flex items-center justify-center"><Text className='text-white text-xl'>No more posts 😟</Text></View>
+              }
+            </View>
+          }
         />
       </View>
     </>

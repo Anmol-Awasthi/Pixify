@@ -1,5 +1,5 @@
 import { decode } from "base64-arraybuffer";
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from "expo-file-system";
 import { supabase } from "../app/lib/Supabase";
 import { supaBaseUrl } from "../helpers/common";
 
@@ -12,11 +12,11 @@ export const getUserImageSrc = (imagePath) => {
 };
 
 export const getSupabaseFileUrl = (filepath) => {
-    if(filepath) {
-        return `${supaBaseUrl}/storage/v1/object/public/uploads/${filepath}`;
-    }
-    return null;
-}
+  if (filepath) {
+    return `${supaBaseUrl}/storage/v1/object/public/uploads/${filepath}`;
+  }
+  return null;
+};
 
 export const uploadImage = async (folderName, fileUri, isImage = true) => {
   try {
@@ -34,13 +34,16 @@ export const uploadImage = async (folderName, fileUri, isImage = true) => {
         upsert: false,
       });
 
-      if (error) {
-        console.log("Error uploading image: ", error);
-        return { success: false, msg: "Error uploading image. Please try again." };
-      }
+    if (error) {
+      console.log("Error uploading image: ", error);
+      return {
+        success: false,
+        msg: "Error uploading image. Please try again.",
+      };
+    }
 
-      console.log("Image uploaded successfully: ", data);
-      return { success: true, data: data.path };
+    console.log("Image uploaded successfully: ", data);
+    return { success: true, data: data.path };
   } catch (error) {
     console.log("Error uploading image: ", error);
     return { success: false, msg: "Error uploading image. Please try again." };

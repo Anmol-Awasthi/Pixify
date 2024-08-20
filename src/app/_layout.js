@@ -22,13 +22,10 @@ const MainLayout = () => {
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        // console.log("Session user: ", session?.user);
-
+      async (_event, session) => {
         if (session) {
-          // console.log("Session user email: ", session.user.email);
           setAuth(session?.user);
-          updateUserData(session?.user, session?.user?.email);
+          await updateUserData(session?.user, session?.user?.email);
           router.replace("/Home");
         } else {
           setAuth(null);
@@ -37,7 +34,23 @@ const MainLayout = () => {
         }
       }
     );
+  
+    checkSession();
+  
+    return () => {
+      if (authListener && authListener.unsubscribe) {
+        authListener.unsubscribe();
+      }
+    };
   }, []);
+  
+  const checkSession = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      router.replace("/Welcome");
+    }
+  };
+  
 
   const updateUserData = async (user, email) => {
     if (user) {
@@ -46,7 +59,6 @@ const MainLayout = () => {
         setUserData({ ...res.data, email: email || '' });
       }
     } else {
-      // Handle the case where user is null
       setUserData({});
     }
   };
