@@ -12,9 +12,10 @@ export const getUserImageSrc = (imagePath) => {
 };
 
 export const getSupabaseFileUrl = (filepath) => {
-  if (filepath) {
+  if (filepath && supaBaseUrl) {
     return `${supaBaseUrl}/storage/v1/object/public/uploads/${filepath}`;
   }
+  console.log("Unable to generate URL. filepath:", filepath, "supaBaseUrl:", supaBaseUrl);
   return null;
 };
 
@@ -53,3 +54,29 @@ export const uploadImage = async (folderName, fileUri, isImage = true) => {
 const getFilePath = (folderName, isImage) => {
   return `${folderName}/${new Date().getTime()}${isImage ? ".png" : ".mp4"}`;
 };
+
+export const getLocalFilePath = filePath => {
+  if (!filePath) return null;
+  let fileName = filePath.includes('/') ? filePath.split("/").pop() : filePath;
+  return `${FileSystem.documentDirectory}${fileName}`;
+};
+  export const downloadFile = async (filePath) => {
+    try {
+      const fullUrl = getSupabaseFileUrl(filePath);
+      if (!fullUrl) {
+        console.log("Unable to generate full URL");
+        return null;
+      }
+      const localPath = getLocalFilePath(filePath);
+      if (!localPath) {
+        console.log("Unable to generate local file path");
+        return null;
+      }
+      const { uri } = await FileSystem.downloadAsync(fullUrl, localPath);
+      console.log("File downloaded successfully to:", uri);
+      return uri;
+    } catch (error) {
+      console.log("Error downloading file: ", error);
+      return null;
+    }
+  };

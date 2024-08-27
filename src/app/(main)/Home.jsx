@@ -119,7 +119,7 @@ export default function Home() {
           )}
           onEndReached={() => {
             getPosts();
-            console.log("Reached end");
+            // console.log("Reached end");
           }}
           onEndReachedThreshold={0}
           ListFooterComponent={

@@ -13,11 +13,11 @@
       "backgroundColor": "#17153B"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/Pixify-logo.png",
         "backgroundColor": "#17153B"
       },
       "package": "com.anmol7.Pixify"
