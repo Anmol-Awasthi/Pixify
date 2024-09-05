@@ -164,3 +164,23 @@ export const removeComment = async (commentId) => {
     return { success: false, msg: "Failed to delete comment. Please try again." };
   }
 };
+export const removePost = async (postId) => {
+  try {
+    const { error } = await supabase
+      .from("posts")
+      .delete()
+      .eq("id", postId)
+    if (error) {
+      console.log("Remove Post Error : ", error);
+      return {
+        success: false,
+        msg: "Failed to delete post. Please try again.",
+      };
+    }
+
+    return { success: true, data: {postId} };
+  } catch (error) {
+    console.log("Remove post error : ", error);
+    return { success: false, msg: "Failed to delete post. Please try again." };
+  }
+};

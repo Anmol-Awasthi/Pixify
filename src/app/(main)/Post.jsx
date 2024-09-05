@@ -86,8 +86,8 @@ export default function Post() {
     let mediaConfig = {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
-      quality: 0.7,
+      aspect: [1, 1],
+      quality: 1,
     };
 
     if (!isImage) {
@@ -159,17 +159,17 @@ export default function Post() {
           <View className="h-60 w-full overflow-hidden rounded-3xl mt-6">
             {getFileType(file) == "video" ? (
               <Video
-                className="flex-1 w-full h0full"
+                className="flex-1 w-full h-full"
                 source={{ uri: getFileUrl(file) }}
                 useNativeControls
-                resizeMode="cover"
+                resizeMode="contain"
                 isLooping
               />
             ) : (
               <Image
                 source={{ uri: getFileUrl(file) }}
                 className="flex-1"
-                resizeMode="cover"
+                resizeMode="contain"
               />
             )}
             <Pressable

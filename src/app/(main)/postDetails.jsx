@@ -15,6 +15,7 @@ import {
   createComment,
   fetchPostDetails,
   removeComment,
+  removePost,
 } from "../../Services/PostService";
 import {
   PaperAirplaneIcon,
@@ -64,7 +65,7 @@ const PostDetails = () => {
     let res = await createComment(data);
     if (res.success) {
       commentRef.current = "";
-      inputRef.current.setNativeProps({ text: '' });
+      inputRef.current.setNativeProps({ text: "" });
       setSendLoading(false);
       // console.log("Comment added successfully", res.data);
     } else {
@@ -89,6 +90,21 @@ const PostDetails = () => {
         };
       });
     }
+  };
+
+  const onDeletePost = async (item) => {
+    // console.log("Delete post: ", item);
+    let res = await removePost(item.id);
+    if (res.success) {
+      router.back();
+    }
+    else {
+      Alert.alert("Post", "Something went wrong !");
+    }
+  };
+
+  const onEditPost = async (item) => {
+    console.log("Edit post: ", item);
   };
 
   useEffect(() => {
@@ -165,6 +181,9 @@ const PostDetails = () => {
           router={router}
           hasShadow={false}
           showMoreIcons={false}
+          showDelete={true}
+          onDelete={onDeletePost}
+          onEdit={onEditPost}
         />
         <View className="bg-transparent border-2 border-gray-300 px-3 py-2 rounded-lg my-4 flex-row">
           <TextInput
@@ -190,6 +209,17 @@ const PostDetails = () => {
         </View>
 
         {/* Comment List  */}
+
+        {
+          post.comments.length > 0 && (
+            <View>
+          <Text className="text-white mb-2 text-xl">
+            Comments : {post.comments.length}
+          </Text>
+        </View>
+          )
+        }
+
         {/* {console.log("Comments: ", post?.comments)} */}
         <View className="gap-8 mt-2 mb-4 mx-auto w-full">
           {post?.comments?.map((comment) => (
