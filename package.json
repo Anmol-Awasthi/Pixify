@@ -42,6 +42,7 @@
     "react-native": "^0.74.5",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-heroicons": "^4.0.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-pell-rich-editor": "^1.9.0",
     "react-native-reanimated": "~3.10.1",
     "react-native-render-html": "^6.3.4",

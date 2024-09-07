@@ -85,7 +85,7 @@ const PostCard = memo(({
     <View
       className={`${
         hasShadow ? "shadow-lg" : ""
-      } border-2 border-gray-300 rounded-3xl px-4 py-2 my-2 flex flex-col`}
+      } border-2 border-gray-400 rounded-3xl px-4 py-2 my-2 flex flex-col`}
     >
       {/* User info */}
       <View className="flex-row items-center space-x-2 justify-start my-2">
@@ -105,12 +105,12 @@ const PostCard = memo(({
         )}
         {showDelete && currentUser?.id === item.user.id && (
           <View className="flex-row items-center space-x-4">
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => onEdit(item)}
               className="opacity-80"
             >
               <PencilIcon size={28} color="yellow" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               onPress={handleDeletePost}
               className="opacity-80"
@@ -163,7 +163,7 @@ const PostCard = memo(({
 
       {/* Post Actions */}
       {showMoreIcons && (
-        <View className="flex-row bg-black/30 border-2 border-gray-500 rounded-2xl mb-2 justify-around w-full items-center space-x-4 h-14 mt-2">
+        <View className="flex-row bg-black/30 border-2 border-gray-500 rounded-2xl mb-2 justify-around w-full items-center space-x-4 h-12">
           <View>
             <TouchableOpacity
               onPress={onLike}

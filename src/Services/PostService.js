@@ -35,9 +35,25 @@ export const CreateOrUpdatePost = async (post) => {
     return { success: false, msg: "Failed to create post. Please try again." };
   }
 };
-export const fetchPosts = async (limit = 10) => {
+export const fetchPosts = async (limit = 10, userId) => {
   try {
-    const { data, error } = await supabase
+    if(userId) {
+      const { data, error } = await supabase
+      .from("posts")
+      .select(`*, user: users (id, name, image), postLikes (*), comments (count)`)
+      .order("created_at", { ascending: false })
+      .eq("userId", userId)
+      .limit(limit);
+
+    if (error) {
+      console.log("Fetch post error: ", error);
+      return { success: false, msg: "Failed to fetch post. Please try again." };
+    }
+
+    return { success: true, data: data };
+    }
+     else {
+      const { data, error } = await supabase
       .from("posts")
       .select(`*, user: users (id, name, image), postLikes (*), comments (count)`)
       .order("created_at", { ascending: false })
@@ -49,6 +65,7 @@ export const fetchPosts = async (limit = 10) => {
     }
 
     return { success: true, data: data };
+     }
   } catch (error) {
     console.log("Fetch post error: ", error);
     return { success: false, msg: "Failed to fetch post. Please try again." };

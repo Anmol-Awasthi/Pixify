@@ -10,6 +10,7 @@ LogBox.ignoreLogs([
   "Warning: TNodeChildrenRenderer",
   "Warning: MemoizedTNodeRenderer",
   "Warning: TRenderEngineProvider",
+  "You seem to update props of"
 ]);
 
 const _layout = () => {

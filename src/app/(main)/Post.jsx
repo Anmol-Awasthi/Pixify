@@ -38,6 +38,18 @@ export default function Post() {
     //   Alert.alert("Post upload", "Please choose a media or add a caption");
     //   return;
     // }
+    if(!file) {
+      if(!bodyRef.current) {
+        Alert.alert("Post upload", "Post can't be blank");
+        return;
+      }
+    }
+    if(!bodyRef.current) {
+      if(!file) {
+        Alert.alert("Post upload", "Post can't be blank");
+        return;
+      }
+    }
 
     let data = {
       body: bodyRef.current,

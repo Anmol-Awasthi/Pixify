@@ -25,6 +25,7 @@ import CommentItem from "../../components/CommentItem";
 import Header from "../../components/Header";
 import { supabase } from "../lib/Supabase";
 import { getUserData } from "../../Services/userService";
+import { createNotification } from "../../Services/notificationService";
 
 const PostDetails = () => {
   const { postId } = useLocalSearchParams();
@@ -64,6 +65,15 @@ const PostDetails = () => {
     };
     let res = await createComment(data);
     if (res.success) {
+      if(user.id != post.user.id ) {
+        let notify = {
+          senderId: user.id,
+          receiverId: post.user.id,
+          title: 'commented on your post !',
+          data: JSON.stringify({postId: post.id, commentId: res.data.id})
+        }
+        createNotification(notify);
+      }
       commentRef.current = "";
       inputRef.current.setNativeProps({ text: "" });
       setSendLoading(false);
