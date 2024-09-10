@@ -4,27 +4,47 @@ import Avatar from "./Avatar";
 import moment from "moment";
 import { ArchiveBoxIcon, TrashIcon } from "react-native-heroicons/outline";
 
-const CommentItem = ({ item, canDelete = false, onDelete = () => {} }) => {
+const CommentItem = ({
+  item,
+  canDelete = false,
+  onDelete = () => {},
+  highlight = false,
+}) => {
   const createdAtDate = moment(item.created_at).format("D MMM");
   const createdAtTime = moment(item.created_at).format("h:mm A");
 
   const handleDelete = () => {
-    Alert.alert("Delete Comment", "Are you sure you want to delete this comment?", [
-      {
-        text: "Cancel",
-        style: "cancel",
-      },
-      {
-        text: "Delete",
-        style: "destructive",
-        onPress: () => {
-          onDelete(item);
-        }
-      },
-    ]);
+    Alert.alert(
+      "Delete Comment",
+      "Are you sure you want to delete this comment?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            onDelete(item);
+          },
+        },
+      ]
+    );
   };
   return (
-    <View className="border-2 border-gray-500 p-1 px-2 rounded-lg mb-3">
+    <View
+      className={`border-2 border-gray-500 p-1 px-2 rounded-lg mb-3`}
+      style={
+        highlight
+          ? {
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              borderColor: "white",
+              boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+            }
+          : {}
+      }
+    >
       <View className="flex-row space-x-2 items-center justify-between">
         <View className="flex-row space-x-2">
           <Avatar uri={item.user.image} size={35} rounded={10} />

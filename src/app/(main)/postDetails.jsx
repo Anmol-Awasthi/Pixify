@@ -28,7 +28,7 @@ import { getUserData } from "../../Services/userService";
 import { createNotification } from "../../Services/notificationService";
 
 const PostDetails = () => {
-  const { postId } = useLocalSearchParams();
+  const { postId, commentId } = useLocalSearchParams();
   // console.log("Post Id: ", postId);
 
   const [post, setPost] = useState(null);
@@ -237,6 +237,7 @@ const PostDetails = () => {
               item={comment}
               key={comment.id.toString()}
               canDelete={comment.user.id === user?.id || user.id == post.userId}
+              highlight={comment.id == commentId}
               onDelete={onDeleteComment}
             />
           ))}

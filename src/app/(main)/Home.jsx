@@ -29,6 +29,7 @@ export default function Home() {
   const [limit, setLimit] = useState(7);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [notificationCount, setNotificationCount] = useState(0);
 
   const handlePostEvent = async (payload) => {
     if (payload.eventType === "INSERT" && payload?.new?.id) {
@@ -84,10 +85,25 @@ export default function Home() {
 
     // getPosts();
 
+    const notificationChannel = supabase
+      .channel("notifications")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "notifications",
+          filter: `receiverId=eq.${user.id}`,
+        },
+        handleNotificationEvent
+      )
+      .subscribe();
+
     return () => {
       supabase.removeChannel(postChannel);
       supabase.removeChannel(likeChannel);
       supabase.removeChannel(commentChannel);
+      supabase.removeChannel(notificationChannel);
     };
   }, []);
 
@@ -125,6 +141,14 @@ export default function Home() {
     });
   };
 
+  const handleNotificationEvent = (payload) => {
+    console.log("Notification Event: ", payload);
+    if (payload.eventType === "INSERT" && payload.new.id) {
+      setNotificationCount((prevCount) => prevCount + 1);
+      // console.log("Notification Count: ", notificationCount);
+    }
+  };
+
   const getPosts = async () => {
     if (!hasMore) return;
     setLoading(true);
@@ -134,11 +158,10 @@ export default function Home() {
         setHasMore(false);
       }
       setPosts(res.data);
-      setLimit(prevLimit => prevLimit + 7);
+      setLimit((prevLimit) => prevLimit + 7);
     }
     setLoading(false);
   };
-  
 
   // const onLogout = async () => {
   //   const { error } = await supabase.auth.signOut();
@@ -164,9 +187,20 @@ export default function Home() {
           </View>
           {/* icons */}
           <View className="flex-row space-x-3">
-            <Pressable onPress={() => router.push("/Notifications")}>
+            <Pressable onPress={() => {
+              setNotificationCount(0);
+              router.push("/Notifications")
+            }}>
               <BellIcon size={36} color="white" />
+              {notificationCount > 0 && (
+                <View className="absolute top-0 right-0 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center">
+                  <Text className="text-white text-xs font-bold">
+                    {notificationCount}
+                  </Text>
+                </View>
+              )}
             </Pressable>
+
             <Pressable onPress={() => router.push("/Post")}>
               <PlusCircleIcon size={36} color="white" />
             </Pressable>
