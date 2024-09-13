@@ -150,7 +150,7 @@ const PostCard = memo(({
 
       {/* Post Video */}
       {item?.file && item?.file?.includes("postVideos") && (
-        <View className="border border-gray-500 overflow-hidden h-[473px] rounded-3xl mt-4 mb-4">
+        <View className="border border-gray-500 overflow-hidden h-[473px] rounded-3xl mb-4">
           <Video
             source={{ uri: getSupabaseFileUrl(item.file) }}
             className="w-full h-full"

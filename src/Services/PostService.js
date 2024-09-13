@@ -37,35 +37,44 @@ export const CreateOrUpdatePost = async (post) => {
 };
 export const fetchPosts = async (limit = 10, userId) => {
   try {
-    if(userId) {
+    if (userId) {
       const { data, error } = await supabase
-      .from("posts")
-      .select(`*, user: users (id, name, image), postLikes (*), comments (count)`)
-      .order("created_at", { ascending: false })
-      .eq("userId", userId)
-      .limit(limit);
+        .from("posts")
+        .select(
+          `*, user: users (id, name, image), postLikes (*), comments (count)`
+        )
+        .order("created_at", { ascending: false })
+        .eq("userId", userId)
+        .limit(limit);
 
-    if (error) {
-      console.log("Fetch post error: ", error);
-      return { success: false, msg: "Failed to fetch post. Please try again." };
-    }
+      if (error) {
+        console.log("Fetch post error: ", error);
+        return {
+          success: false,
+          msg: "Failed to fetch post. Please try again.",
+        };
+      }
 
-    return { success: true, data: data };
-    }
-     else {
+      return { success: true, data: data };
+    } else {
       const { data, error } = await supabase
-      .from("posts")
-      .select(`*, user: users (id, name, image), postLikes (*), comments (count)`)
-      .order("created_at", { ascending: false })
-      .limit(limit);
+        .from("posts")
+        .select(
+          `*, user: users (id, name, image), postLikes (*), comments (count)`
+        )
+        .order("created_at", { ascending: false })
+        .limit(limit);
 
-    if (error) {
-      console.log("Fetch post error: ", error);
-      return { success: false, msg: "Failed to fetch post. Please try again." };
+      if (error) {
+        console.log("Fetch post error: ", error);
+        return {
+          success: false,
+          msg: "Failed to fetch post. Please try again.",
+        };
+      }
+
+      return { success: true, data: data };
     }
-
-    return { success: true, data: data };
-     }
   } catch (error) {
     console.log("Fetch post error: ", error);
     return { success: false, msg: "Failed to fetch post. Please try again." };
@@ -75,7 +84,9 @@ export const fetchPostDetails = async (postId) => {
   try {
     const { data, error } = await supabase
       .from("posts")
-      .select(`*, user: users (id, name, image), postLikes (*), comments (*, user: users (id, name, image))`)
+      .select(
+        `*, user: users (id, name, image), postLikes (*), comments (*, user: users (id, name, image))`
+      )
       .eq("id", postId)
       .order("created_at", { ascending: false, foreignTable: "comments" })
       .single();
@@ -166,7 +177,7 @@ export const removeComment = async (commentId) => {
     const { error } = await supabase
       .from("comments")
       .delete()
-      .eq("id", commentId)
+      .eq("id", commentId);
     if (error) {
       console.log("Remove Comment Error : ", error);
       return {
@@ -175,18 +186,18 @@ export const removeComment = async (commentId) => {
       };
     }
 
-    return { success: true, data: {commentId} };
+    return { success: true, data: { commentId } };
   } catch (error) {
     console.log("Remove Comment error : ", error);
-    return { success: false, msg: "Failed to delete comment. Please try again." };
+    return {
+      success: false,
+      msg: "Failed to delete comment. Please try again.",
+    };
   }
 };
 export const removePost = async (postId) => {
   try {
-    const { error } = await supabase
-      .from("posts")
-      .delete()
-      .eq("id", postId)
+    const { error } = await supabase.from("posts").delete().eq("id", postId);
     if (error) {
       console.log("Remove Post Error : ", error);
       return {
@@ -195,7 +206,7 @@ export const removePost = async (postId) => {
       };
     }
 
-    return { success: true, data: {postId} };
+    return { success: true, data: { postId } };
   } catch (error) {
     console.log("Remove post error : ", error);
     return { success: false, msg: "Failed to delete post. Please try again." };

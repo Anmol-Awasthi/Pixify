@@ -2,6 +2,7 @@ import {
   ActivityIndicator,
   Alert,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -159,7 +160,7 @@ const EditProfile = () => {
       </Animated.View>
 
       {/* form */}
-
+      <ScrollView className="flex-1">
       <View className="mt-16 flex items-center justify-center space-y-5">
         <Animated.View
           entering={FadeInDown.delay(150).springify().damping(10)}
@@ -221,6 +222,7 @@ const EditProfile = () => {
           />
         </Animated.View>
       </View>
+      </ScrollView>
 
       {loading ? (
         <Text className="mx-auto absolute left-[50%] bottom-10 text-white text-xl">
@@ -229,7 +231,7 @@ const EditProfile = () => {
       ) : (
         <Animated.View
           entering={FadeInDown.delay(350).springify().damping(10)}
-          className="fixed -bottom-20 left-0 right-0"
+          className="fixed bottom-10 left-0 right-0"
         >
           <Pressable
             onPress={onSubmit}

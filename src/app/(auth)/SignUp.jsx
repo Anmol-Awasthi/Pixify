@@ -50,17 +50,17 @@ export default function SignUp() {
         if (error) throw error;
   
         // Inform the user to check their email
-        Alert.alert(
-          "Check Your Email",
-          "A verification email has been sent. Please check your inbox to verify your email address."
-        );
+        // Alert.alert(
+        //   "Check Your Email",
+        //   "A verification email has been sent. Please check your inbox to verify your email address."
+        // );
   
-        // Optionally, you can redirect to a different page or reset the form
-        router.replace("/SignIn"); // Or any other page you'd like to navigate to
+        router.replace("/(main)/Home");
       } catch (error) {
-        console.log("Error:", error);
+        console.log("Detailed Error:", JSON.stringify(error, null, 2));
         Alert.alert("Sign Up", error.message);
-      } finally {
+      }
+       finally {
         setLoading(false);
       }
     }

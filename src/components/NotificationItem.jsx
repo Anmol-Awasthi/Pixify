@@ -19,9 +19,9 @@ const NotificationItem = ({ item, router }) => {
       <View className="flex-row space-x-4 items-center justify-start">
         <Avatar uri={item.sender.image} size={50} rounded={18} />
         <View>
-          <Text className="text-white font-bold text-2xl">
+          <Text className="text-white font-bold text-lg">
             {item.sender.name}{" "}
-            <Text className="text-lg font-semibold">{item.title}</Text>
+            <Text className="text-base font-semibold">{item.title}</Text>
           </Text>
           <Text className="text-white">
             {createdAtDate} · {createdAtTime}

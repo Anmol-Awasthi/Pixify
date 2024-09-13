@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/Pixify-logo.png",
         "backgroundColor": "#17153B"
       },
-      "package": "com.anmol7.Pixify"
+      "package": "com.anmol7.Pixify",
+      "softwareKeyboardLayoutMode": "pan"
     },
     "web": {
       "bundler": "metro",

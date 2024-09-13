@@ -119,7 +119,7 @@ export default function Post() {
   return (
     <View className="pt-12 px-4 bg-[#17153B] flex-1">
       <Header title="Create Post" router={router} />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} className="mb-4">
         {/* Avatar */}
         <Pressable
           onPress={() => router.replace("/Profile")}
@@ -168,7 +168,7 @@ export default function Post() {
         {/* Actual Media */}
 
         {file && (
-          <View className="h-60 w-full overflow-hidden rounded-3xl mt-6">
+          <View className="w-full aspect-square overflow-hidden rounded-3xl mt-6">
             {getFileType(file) == "video" ? (
               <Video
                 className="flex-1 w-full h-full"

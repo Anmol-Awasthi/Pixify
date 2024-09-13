@@ -1,4 +1,13 @@
-import { ActivityIndicator, Alert, FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "expo-router";
@@ -31,50 +40,51 @@ export default function Profile() {
         setHasMore(false);
       }
       setPosts(res.data);
-      setLimit(prevLimit => prevLimit + 7);
+      setLimit((prevLimit) => prevLimit + 7);
     }
     // setLoading(false);
   };
 
   return (
     <View className="flex-1 pt-12 px-4 bg-[#17153B] text-white">
-      <UserHeader user={user} router={router} />
-      {/* <FlatList
-          data={posts}
-          ListHeaderComponent={<UserHeader user={user} router={router} />}
-          ListHeaderComponentStyle={{ marginBottom: 20 }}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item.id.toString()}
-          // refreshing={refreshing || loading}
-          // onRefresh={onRefresh}
-          contentContainerStyle={{ paddingBottom: 100, paddingTop: 10}}
-          renderItem={({ item }) => (
-            <PostCard item={item} currentUser={user} router={router} />
-          )}
-          onEndReached={() => {
-            getPosts();
-            // console.log("Reached end");
-          }}
-          onEndReachedThreshold={0}
-          ListFooterComponent={
-            <View className={`${posts.length == 0 ? "mt-30" : "mt-10"}`}>
-              {hasMore ? (
-                <ActivityIndicator size="large" color="white" />
-              ) : (
-                <View className="flex items-center justify-center">
-                  <Text className="text-white text-xl">No more posts 😟</Text>
-                </View>
-              )}
-            </View>
-          }
-        /> */}
-      
+      <View>
+        <Header title="Profile" router={router} />
+        <View className="bg-[#faaeae] h-10 w-10 flex items-center justify-center rounded-full absolute right-0">
+          <TouchableOpacity
+            onPress={() => onLogout()}
+            className="flex items-center justify-center"
+          >
+            <PowerIcon size={28} color="red" />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <FlatList
+        data={posts}
+        ListHeaderComponent={<UserHeader user={user} router={router} />}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={{ paddingBottom: 100, paddingHorizontal: 20, marginTop: 20 }}
+        renderItem={({ item }) => (
+          <PostCard item={item} currentUser={user} router={router} showMoreIcons={false} />
+        )}
+        onEndReached={getPosts}
+        onEndReachedThreshold={0}
+        ListFooterComponent={posts.length === 0 ? (
+          <View className="self-center mt-4">
+            <Text className="text-white text-lg">Make your first post now !</Text>
+          </View>
+        ) : (
+          <View className="self-center mt-4">
+            <Text className="text-white text-lg">That's what you have posted so far !</Text>
+          </View>
+        )}
+        
+      />
     </View>
   );
+  
 }
-
-
 
 const onLogout = async () => {
   Alert.alert("Log Out", "Are you sure you want to sign out?", [
@@ -98,18 +108,8 @@ const onLogout = async () => {
 
 const UserHeader = ({ user, router }) => {
   return (
-    <View className="flex-1">
-      <Header title="Profile" router={router} />
-      <View className="bg-[#faaeae] h-10 w-10 flex items-center justify-center rounded-full absolute right-0">
-        <TouchableOpacity
-          onPress={() => onLogout()}
-          className="flex items-center justify-center"
-        >
-          <PowerIcon size={28} color="red" />
-        </TouchableOpacity>
-      </View>
-
-      <View className="mt-20">
+    <View className="mt-1">
+      <View className="">
         <Animated.View
           entering={FadeInDown.delay(100).springify().damping(10)}
           className="AvatarContainer flex items-start ml-6 justify-center"
@@ -131,24 +131,26 @@ const UserHeader = ({ user, router }) => {
         </Animated.View>
 
         <View className="flex-row items-end ml-6 space-x-2 mt-6">
-        <Animated.View
-          entering={FadeInDown.delay(150).springify().damping(10)}
-          // className=" flex items-center justify-center mt-4"
-        >
-          <Text className="text-white text-2xl font-medium">{user?.name}</Text>
-        </Animated.View>
-
-        {user && user.address && (
           <Animated.View
-            entering={FadeInDown.delay(200).springify().damping(10)}
-            // className="flex-row items-center justify-center gap-2"
-            className="pb-[1px]"
+            entering={FadeInDown.delay(150).springify().damping(10)}
+            // className=" flex items-center justify-center mt-4"
           >
-            <Text className="text-white/75 text-base font-medium">
-              {user.address}
+            <Text className="text-white text-2xl font-medium">
+              {user?.name}
             </Text>
           </Animated.View>
-        )}
+
+          {user && user.address && (
+            <Animated.View
+              entering={FadeInDown.delay(200).springify().damping(10)}
+              // className="flex-row items-center justify-center gap-2"
+              className="pb-[1px]"
+            >
+              <Text className="text-white/75 text-base font-medium">
+                {user.address}
+              </Text>
+            </Animated.View>
+          )}
         </View>
 
         <View className="flex items-start ml-4 justify-start gap-y-2 mt-1">

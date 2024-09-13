@@ -115,11 +115,13 @@ export default function Home() {
     setPosts((prevPosts) => {
       return prevPosts.map((post) => {
         if (post.id === payload.new.postId) {
-          const likesCount =
-            payload.eventType === "INSERT"
-              ? post.postLikes.length + 1
-              : post.postLikes.length - 1;
-          return { ...post, postLikes: { length: likesCount } };
+          let updatedLikes = [...post.postLikes];
+          if (payload.eventType === "INSERT") {
+            updatedLikes.push(payload.new);
+          } else if (payload.eventType === "DELETE") {
+            updatedLikes = updatedLikes.filter(like => like.id !== payload.old.id);
+          }
+          return { ...post, postLikes: updatedLikes };
         }
         return post;
       });
@@ -142,7 +144,7 @@ export default function Home() {
   };
 
   const handleNotificationEvent = (payload) => {
-    console.log("Notification Event: ", payload);
+    // console.log("Notification Event: ", payload);
     if (payload.eventType === "INSERT" && payload.new.id) {
       setNotificationCount((prevCount) => prevCount + 1);
       // console.log("Notification Count: ", notificationCount);
@@ -224,7 +226,7 @@ export default function Home() {
           keyExtractor={(item) => item.id.toString()}
           refreshing={refreshing || loading}
           onRefresh={onRefresh}
-          contentContainerStyle={{ paddingBottom: 100, paddingTop: 10 }}
+          contentContainerStyle={{ paddingBottom: 100, paddingTop: 10}}
           renderItem={({ item }) => (
             <PostCard item={item} currentUser={user} router={router} />
           )}
