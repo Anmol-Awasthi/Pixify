@@ -185,15 +185,17 @@ export default function Home() {
             <Text className="text-3xl text-white tracking-widest font-bold">
               Pixify
             </Text>
-            <Text className="text-gray-400 pb-1">by Anmol</Text>
+            <Text className="text-gray-300 font-semibold pb-1">by Anmol</Text>
           </View>
+          
+        </View>
           {/* icons */}
-          <View className="flex-row space-x-3">
+        <View className="flex-row justify-around bg-black/95 rounded-tr-3xl rounded-tl-3xl border-2 border-gray-500 absolute bottom-0 left-0 right-0 mx-4 py-3 pb-4 z-10">
             <Pressable onPress={() => {
               setNotificationCount(0);
               router.push("/Notifications")
             }}>
-              <BellIcon size={36} color="white" />
+              <BellIcon size={40} color="white" />
               {notificationCount > 0 && (
                 <View className="absolute top-0 right-0 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center">
                   <Text className="text-white text-xs font-bold">
@@ -204,18 +206,17 @@ export default function Home() {
             </Pressable>
 
             <Pressable onPress={() => router.push("/Post")}>
-              <PlusCircleIcon size={36} color="white" />
+              <PlusCircleIcon size={40} color="white" />
             </Pressable>
             <Pressable onPress={() => router.push("/Profile")}>
               <Avatar
                 uri={user?.image}
-                size={36}
+                size={40}
                 rounded={12}
                 style={{ borderWidth: 2 }}
               />
             </Pressable>
           </View>
-        </View>
 
         {/* Feed */}
 
@@ -227,6 +228,10 @@ export default function Home() {
           refreshing={refreshing || loading}
           onRefresh={onRefresh}
           contentContainerStyle={{ paddingBottom: 100, paddingTop: 10}}
+          windowSize={10} // Adjust this based on device performance (default is 21)
+          initialNumToRender={5} // Render fewer items initially for better performance
+          maxToRenderPerBatch={5} // Batch rendering to improve frame rate
+          updateCellsBatchingPeriod={50} // Delay rendering of offscreen items
           renderItem={({ item }) => (
             <PostCard item={item} currentUser={user} router={router} />
           )}
