@@ -1,6 +1,6 @@
 # Pixify
 
-**Pixify** is a dynamic and engaging social media app developed by **Anmol Awasthi**. Crafted with React Native and Expo, and utilizing Supabase for backend services, Pixify offers a unique and interactive experience for users to connect and share content seamlessly.
+**Pixify** is a dynamic and engaging social media app. Crafted with React Native and Expo, and utilizing Supabase for backend services, Pixify offers a unique and interactive experience for users to connect and share content seamlessly.
 
 ## 🌟 Features
 
