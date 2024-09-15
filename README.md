@@ -1,50 +1,39 @@
-# Welcome to your Expo app 👋
+# Pixify
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Pixify** is a dynamic and engaging social media app developed by **Anmol Awasthi**. Crafted with React Native and Expo, and utilizing Supabase for backend services, Pixify offers a unique and interactive experience for users to connect and share content seamlessly.
 
-## Get started
+## 🌟 Features
 
-1. Install dependencies
+- **Real-Time Feed Updates**: Stay updated with a live feed of posts and interactions as they happen.
+- **Rich Text Editor**: Customize your post captions with an editable rich text editor, allowing for a more personalized and engaging experience.
+- **Media Attachments**: Easily attach images or videos to your posts, enhancing the way you share and interact with your community.
+- **Profile Management**: Update your profile details effortlessly and keep your information up-to-date.
+- **In-App Notifications**: Receive real-time notifications for comments on your posts, ensuring you never miss a moment.
 
-   ```bash
-   npm install
-   ```
+## 📱 User Experience
 
-2. Start the app
+Pixify has been designed with a focus on user interaction and seamless content sharing. The app’s intuitive interface and real-time features create a lively social environment, making it easy for users to stay connected and engaged.
 
-   ```bash
-    npx expo start
-   ```
+## 🚀 Tech Stack
 
-In the output, you'll find options to open the app in a
+- **React Native**: For building a smooth and responsive mobile experience.
+- **Expo**: To simplify the development and deployment process.
+- **Supabase**: Providing backend services such as authentication and real-time database functionality.
+- **NativeWind**: For crafting a visually appealing and responsive design using utility-first CSS.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🎨 Design
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Pixify's design leverages modern UI/UX principles to offer a visually appealing and user-friendly experience. With a focus on clean aesthetics and intuitive navigation, users can easily interact with their feed, manage their profiles, and engage with content.
 
-## Get a fresh project
+## 📅 Future Plans
 
-When you're ready, run:
+The development of Pixify is an ongoing process. Future updates will include enhancements to existing features, the introduction of new functionalities, and continuous improvements based on user feedback. Stay tuned for more exciting updates!
 
-```bash
-npm run reset-project
-```
+## 📬 Contact
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+For feedback, suggestions, or inquiries, you can reach out to the developer:
 
-## Learn more
+- **Anmol Awasthi** - anmolawasthi777@gmail.com
+- **GitHub** - https://github.com/Anmol-Awasthi
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Thank you for exploring Pixify! Your support and feedback are greatly appreciated. 🌟
