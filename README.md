@@ -33,7 +33,7 @@ The development of Pixify is an ongoing process. Future updates will include enh
 
 For feedback, suggestions, or inquiries, you can reach out to the developer:
 
-- **Anmol Awasthi** - anmolawasthi777@gmail.com
+- **Anmol Awasthi** - mailto:anmolawasthi777@gmail.com
 - **GitHub** - https://github.com/Anmol-Awasthi
 
 Thank you for exploring Pixify! Your support and feedback are greatly appreciated. 🌟
